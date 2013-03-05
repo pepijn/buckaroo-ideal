@@ -5,7 +5,7 @@ module Buckaroo
     #
     # A class to help with the generation of payment forms for the Buckaroo
     # Payment Gateway.
-    # 
+    #
     # A form has a number of required parameters that are retreived from the
     # +Buckaroo::Idea::Order+:
     # * +currency+ -- required; but set by default to 'EUR'
@@ -17,8 +17,6 @@ module Buckaroo
     #
     # It is possible to set the following options for this form:
     # * +language+ -- required, defaults to 'NL'
-    # * +return_method+ -- required, defaults to +Buckaroo::Ideal::Config.return_method+
-    # * +style+ -- required, defaults to +Buckaroo::Ideal::Config.style+
     # * +autoclose_popup+ -- required, defaults to +Buckaroo::Ideal::Config.autoclose_popup+
     # * +reference+ -- optional
     # * +success_url+ -- optional according to documentation
@@ -45,7 +43,7 @@ module Buckaroo
     class Request
       def self.defaults
         {
-          :language        => 'NL',
+          :culture         => 'nl-NL',
           :success_url     => Config.success_url,
           :reject_url      => Config.reject_url,
           :error_url       => Config.error_url,
@@ -54,64 +52,64 @@ module Buckaroo
           :autoclose_popup => Config.autoclose_popup
         }
       end
-      
+
       # @return [String] The configured gateway_url in +Buckaroo::Ideal::Config+
       delegate :gateway_url,  :to => Config
-      
+
       # @return [Boolean] The configured test_mode in +Buckaroo::Ideal::Config+
       delegate :test_mode,    :to => Config
-      
+
       # @return [String] The configured merchant_key in +Buckaroo::Ideal::Config+
       delegate :merchant_key, :to => Config
-      
+
       # @return [Buckaroo::Ideal::Order] The order for which the payment request
       #   is being made
       attr_reader :order
-      
-      # @return [String] The language in wich Buckaroo's user interface is
-      #   presented.
-      attr_accessor :language
-      
+
+      # @return [String] The language in which Buckaroo's user interface is
+      #   presented. Represented as a culture, eg. 'nl-NL'
+      attr_accessor :culture
+
       # Defaults to the configured +Buckaroo::Ideal::Config.success_url+, but
       # can be overwritten in the +Order+ instance.
       #
       # @return [String] The URL the user will be redirected to after a
       #   successful transaction
       attr_accessor :success_url
-      
+
       # Defaults to the configured +Buckaroo::Ideal::Config.reject_url+, but can
       # be overwritten in the +Order+ instance.
       #
       # @return [String] The URL the user will be redirected to after a failed
       #   transaction
       attr_accessor :reject_url
-      
+
       # Defaults to the configured +Buckaroo::Ideal::Config.error_url+, but can
       # be overwritten in the +Order+ instance.
       #
       # @return [String] The URL the user will be redirected to after an error
       #   occured during the transaction
       attr_accessor :error_url
-      
+
       # Defaults to the configured +Buckaroo::Ideal::Config.return_method+, but
       # can be overwritten in the +Order+ instance.
       #
       # @return [String] The HTTP method that will be used to return the user
       #   back to the application after a transaction
       attr_accessor :return_method
-      
+
       # Defaults to the configured +Buckaroo::Ideal::Config.style+, but can be
       # overwritten in the +Order+ instance.
       #
       # @return [String] The style that is being used
       attr_accessor :style
-      
+
       # Defaults to the configured +Buckaroo::Ideal::Config.autoclose_popup+,
       # but can be overwritten in the +Order+ instance.
       #
       # @return [Boolean] Autoclose the popup after a transaction
       attr_accessor :autoclose_popup
-      
+
       # Initialize a new +Buckaroo::Ideal::Request+ instance for the given
       # order.
       #
@@ -125,17 +123,14 @@ module Buckaroo
           set key, value
         end
       end
-      
+
       def parameters
         {
-          'BPE_Currency'        => order.currency,
-          'BPE_Invoice'         => order.invoice_number,
-          'BPE_Amount'          => to_cents(order.amount),
-          'BPE_Merchant'        => merchant_key,
-          'BPE_Language'        => language,
-          'BPE_Mode'            => to_numeric_boolean(test_mode),
-          'BPE_Return_Method'   => return_method,
-          'BPE_Style'           => style,
+          'BRQ_currency'        => order.currency,
+          'BRQ_invoicenumber'   => order.invoice_number,
+          'BRQ_amount'          => order.amount,
+          'BRQ_websitekey'      => merchant_key,
+          'BRQ_culture'         => culture,
           'BPE_Autoclose_Popup' => to_numeric_boolean(autoclose_popup),
           'BPE_Signature2'      => signature
         }.merge compact({
@@ -147,17 +142,17 @@ module Buckaroo
           'BPE_Return_Error'    => error_url
         })
       end
-      
+
       private
-      
+
       def signature
         RequestSignature.new(order).signature
       end
-      
+
       def set(key, value)
         instance_variable_set(:"@#{key}", value)
       end
-      
+
       include Util
     end
   end
