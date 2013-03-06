@@ -24,14 +24,6 @@ module Buckaroo
         #   transaction requests
         attr_accessor :secret_key
 
-        # If test_mode is enabled, transactions will be registered by Buckaroo,
-        # but clients will not be forwared to the iDEAL page of their bank.
-        #
-        # Clients will be redirected back to the success_url of your application
-        #
-        # @return [Boolean] Test mode on/off
-        attr_accessor :test_mode
-
         # @return [String] The URL the user will be redirected to after a
         #   successful transaction
         attr_accessor :success_url

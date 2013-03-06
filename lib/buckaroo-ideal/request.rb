@@ -17,13 +17,12 @@ module Buckaroo
     #
     # It is possible to set the following options for this form:
     # * +language+ -- required, defaults to 'NL'
-    # * +autoclose_popup+ -- required, defaults to +Buckaroo::Ideal::Config.autoclose_popup+
     # * +reference+ -- optional
     # * +success_url+ -- optional according to documentation
     # * +reject_url+ -- optional
     # * +error_url+ -- optional
     #
-    # The +test_mode+, +gateway_url+ and +merchant_key+ are read from
+    # The +gateway_url+ and +merchant_key+ are read from
     # +Buckaroo::Ideal::Config+.
     #
     # To access the information required to create a form, instantiate a new
@@ -131,7 +130,6 @@ module Buckaroo
           'BRQ_amount'          => order.amount,
           'BRQ_websitekey'      => merchant_key,
           'BRQ_culture'         => culture,
-          'BPE_Autoclose_Popup' => to_numeric_boolean(autoclose_popup),
           'BPE_Signature2'      => signature
         }.merge compact({
           'BPE_Issuer'          => order.bank,
@@ -146,7 +144,7 @@ module Buckaroo
       private
 
       def signature
-        RequestSignature.new(order).signature
+        Buckaroo::Ideal::Signature.new(parameters)
       end
 
       def set(key, value)
