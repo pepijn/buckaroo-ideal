@@ -55,88 +55,88 @@ describe Buckaroo::Ideal::Request do
   describe '#parameters' do
     def parameters; request.parameters; end
 
-    it 'has a BRQ_websitekey with the configured merchant_key' do
-      parameters['BRQ_websitekey'].should == 'merchant_key'
+    it 'has a brq_websitekey with the configured merchant_key' do
+      parameters['brq_websitekey'].should == 'merchant_key'
 
       Buckaroo::Ideal::Config.merchant_key = 'new_merchant_key'
-      parameters['BRQ_websitekey'].should == 'new_merchant_key'
+      parameters['brq_websitekey'].should == 'new_merchant_key'
     end
 
-    it "has a BRQ_amount with the order's amount as a float" do
+    it "has a brq_amount with the order's amount as a float" do
       order.amount = 19.95
-      parameters['BRQ_amount'].should == 19.95
+      parameters['brq_amount'].should == 19.95
     end
 
-    it "has a BRQ_currency with the order's currency" do
-      parameters['BRQ_currency'].should == 'EUR'
+    it "has a brq_currency with the order's currency" do
+      parameters['brq_currency'].should == 'EUR'
 
       order.currency = 'BHT'
-      parameters['BRQ_currency'].should == 'BHT'
+      parameters['brq_currency'].should == 'BHT'
     end
 
-    it "has a BRQ_invoicenumber with the order's invoice_number" do
+    it "has a brq_invoicenumber with the order's invoice_number" do
       order.invoice_number = 'INV001'
-      parameters['BRQ_invoicenumber'].should == 'INV001'
+      parameters['brq_invoicenumber'].should == 'INV001'
     end
 
-    it 'has a generated BRQ_Signature2' do
-      parameters['BRQ_Signature2'].length.should == 40
+    it 'has a generated brq_Signature2' do
+      parameters['brq_Signature2'].length.should == 40
 
       request.stub(:signature).and_return('signature')
 
-      parameters['BRQ_Signature2'].should == 'signature'
+      parameters['brq_Signature2'].should == 'signature'
     end
 
-    it 'has a BRQ_culture with the language' do
-      parameters['BRQ_culture'].should == 'nl-NL'
+    it 'has a brq_culture with the language' do
+      parameters['brq_culture'].should == 'nl-NL'
 
       request.culture = 'en-US'
-      parameters['BRQ_culture'].should == 'en-US'
+      parameters['brq_culture'].should == 'en-US'
     end
 
-    it "has a BRQ_Issuer if the order's bank is set" do
-      parameters.keys.should_not include 'BRQ_Issuer'
+    it "has a brq_Issuer if the order's bank is set" do
+      parameters.keys.should_not include 'brq_Issuer'
 
       order.bank = 'ABNAMRO'
-      parameters['BRQ_Issuer'].should == 'ABNAMRO'
+      parameters['brq_Issuer'].should == 'ABNAMRO'
     end
 
-    it "has a BRQ_Description if the order's description is set" do
-      parameters.keys.should_not include 'BRQ_Description'
+    it "has a brq_Description if the order's description is set" do
+      parameters.keys.should_not include 'brq_Description'
 
       order.description = 'Your Order Description'
-      parameters['BRQ_Description'].should == 'Your Order Description'
+      parameters['brq_Description'].should == 'Your Order Description'
     end
 
-    it 'has a BRQ_Reference if the reference is set' do
-      parameters.keys.should_not include 'BRQ_Reference'
+    it 'has a brq_Reference if the reference is set' do
+      parameters.keys.should_not include 'brq_Reference'
 
       order.reference = 'Reference'
-      parameters['BRQ_Reference'].should == 'Reference'
+      parameters['brq_Reference'].should == 'Reference'
     end
 
-    it 'has a BRQ_Return_Success if the success_url is set' do
+    it 'has a brq_Return_Success if the success_url is set' do
       request.success_url = nil
-      parameters.keys.should_not include 'BRQ_Return_Success'
+      parameters.keys.should_not include 'brq_Return_Success'
 
       request.success_url = 'http://example.org/'
-      parameters['BRQ_Return_Success'].should == 'http://example.org/'
+      parameters['brq_Return_Success'].should == 'http://example.org/'
     end
 
-    it 'has a BRQ_Return_Reject if the reject_url is set' do
+    it 'has a brq_Return_Reject if the reject_url is set' do
       request.reject_url = nil
-      parameters.keys.should_not include 'BRQ_Return_Reject'
+      parameters.keys.should_not include 'brq_Return_Reject'
 
       request.reject_url = 'http://example.org/'
-      parameters['BRQ_Return_Reject'].should == 'http://example.org/'
+      parameters['brq_Return_Reject'].should == 'http://example.org/'
     end
 
-    it 'has a BRQ_Return_Error if the error_url is set' do
+    it 'has a brq_Return_Error if the error_url is set' do
       request.error_url = nil
-      parameters.keys.should_not include 'BRQ_Return_Error'
+      parameters.keys.should_not include 'brq_Return_Error'
 
       request.error_url = 'http://example.org/'
-      parameters['BRQ_Return_Error'].should == 'http://example.org/'
+      parameters['brq_Return_Error'].should == 'http://example.org/'
     end
   end
 end
