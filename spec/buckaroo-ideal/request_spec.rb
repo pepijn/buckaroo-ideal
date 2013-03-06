@@ -87,56 +87,56 @@ describe Buckaroo::Ideal::Request do
       parameters['brq_signature'].should == 'signature'
     end
 
-    xit 'has a brq_culture with the language' do
+    it 'has a brq_culture with the language' do
       parameters['brq_culture'].should == 'nl-NL'
 
       request.culture = 'en-US'
       parameters['brq_culture'].should == 'en-US'
     end
 
-    xit "has a brq_Issuer if the order's bank is set" do
+    it "has a brq_Issuer if the order's bank is set" do
       parameters.keys.should_not include 'brq_Issuer'
 
       order.bank = 'ABNAMRO'
-      parameters['brq_Issuer'].should == 'ABNAMRO'
+      parameters['brq_issuer'].should == 'ABNAMRO'
     end
 
-    xit "has a brq_Description if the order's description is set" do
-      parameters.keys.should_not include 'brq_Description'
+    it "has a brq_description if the order's description is set" do
+      parameters.keys.should_not include 'brq_description'
 
       order.description = 'Your Order Description'
-      parameters['brq_Description'].should == 'Your Order Description'
+      parameters['brq_description'].should == 'Your Order Description'
     end
 
-    xit 'has a brq_Reference if the reference is set' do
-      parameters.keys.should_not include 'brq_Reference'
+    it 'has a brq_reference if the reference is set' do
+      parameters.keys.should_not include 'brq_reference'
 
       order.reference = 'Reference'
-      parameters['brq_Reference'].should == 'Reference'
+      parameters['brq_reference'].should == 'Reference'
     end
 
-    xit 'has a brq_Return_Success if the success_url is set' do
+    it 'has a brq_return_success if the success_url is set' do
       request.success_url = nil
-      parameters.keys.should_not include 'brq_Return_Success'
+      parameters.keys.should_not include 'brq_return_success'
 
       request.success_url = 'http://example.org/'
-      parameters['brq_Return_Success'].should == 'http://example.org/'
+      parameters['brq_return_success'].should == 'http://example.org/'
     end
 
-    xit 'has a brq_Return_Reject if the reject_url is set' do
+    it 'has a brq_return_reject if the reject_url is set' do
       request.reject_url = nil
-      parameters.keys.should_not include 'brq_Return_Reject'
+      parameters.keys.should_not include 'brq_return_reject'
 
       request.reject_url = 'http://example.org/'
-      parameters['brq_Return_Reject'].should == 'http://example.org/'
+      parameters['brq_return_reject'].should == 'http://example.org/'
     end
 
-    xit 'has a brq_Return_Error if the error_url is set' do
+    it 'has a brq_return_error if the error_url is set' do
       request.error_url = nil
-      parameters.keys.should_not include 'brq_Return_Error'
+      parameters.keys.should_not include 'brq_return_error'
 
       request.error_url = 'http://example.org/'
-      parameters['brq_Return_Error'].should == 'http://example.org/'
+      parameters['brq_return_error'].should == 'http://example.org/'
     end
   end
 end
