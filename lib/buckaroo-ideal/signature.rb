@@ -29,7 +29,7 @@ module Buckaroo
         content = ""
         @parameters.sort{|a, b|
           a[0].downcase <=> b[0].downcase
-          }.each {|k,v | content += "#{k}#{::CGI::unescape v.to_s}"}
+          }.each {|k,v | content += "#{k}=#{::CGI::unescape v.to_s}"}
         content
       end
 
