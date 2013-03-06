@@ -120,25 +120,34 @@ module Buckaroo
         end
       end
 
+      # def payload
+      #   {
+      #     'BRQ_currency'        => order.currency,
+      #     'BRQ_invoicenumber'   => order.invoice_number,
+      #     'BRQ_amount'          => order.amount,
+      #     'BRQ_websitekey'      => merchant_key,
+      #     'BRQ_culture'         => culture
+      #   }.merge compact({
+      #     'BRQ_Issuer'          => order.bank,
+      #     'BRQ_Description'     => order.description,
+      #     'BRQ_Reference'       => order.reference,
+      #     'BRQ_Return_Success'  => success_url,
+      #     'BRQ_Return_Reject'   => reject_url,
+      #     'BRQ_Return_Error'    => error_url
+      #   })
+      # end
+
       def payload
+        # Sending the absolute minimum payload to simplify debugging
         {
           'BRQ_currency'        => order.currency,
-          'BRQ_invoicenumber'   => order.invoice_number,
           'BRQ_amount'          => order.amount,
           'BRQ_websitekey'      => merchant_key,
-          'BRQ_culture'         => culture
-        }.merge compact({
-          'BRQ_Issuer'          => order.bank,
-          'BRQ_Description'     => order.description,
-          'BRQ_Reference'       => order.reference,
-          'BRQ_Return_Success'  => success_url,
-          'BRQ_Return_Reject'   => reject_url,
-          'BRQ_Return_Error'    => error_url
-        })
+        }
       end
 
       def parameters
-        payload.merge({'BRQ_Signature2' => signature.to_s})
+        payload.merge({'BRQ_signature' => signature.to_s})
       end
 
       private
