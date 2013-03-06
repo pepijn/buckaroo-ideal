@@ -29,10 +29,6 @@ describe Buckaroo::Ideal::Config do
     subject.secret_key.should == 'secret_key'
   end
 
-  it 'has a test_mode' do
-    subject.test_mode.should be_true
-  end
-
   it 'has a success_url' do
     subject.success_url.should == 'http://example.com/transaction/success'
   end

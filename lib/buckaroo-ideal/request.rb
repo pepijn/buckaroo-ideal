@@ -55,9 +55,6 @@ module Buckaroo
       # @return [String] The configured gateway_url in +Buckaroo::Ideal::Config+
       delegate :gateway_url,  :to => Config
 
-      # @return [Boolean] The configured test_mode in +Buckaroo::Ideal::Config+
-      delegate :test_mode,    :to => Config
-
       # @return [String] The configured merchant_key in +Buckaroo::Ideal::Config+
       delegate :merchant_key, :to => Config
 
@@ -123,28 +120,31 @@ module Buckaroo
         end
       end
 
-      def parameters
+      def payload
         {
           'BRQ_currency'        => order.currency,
           'BRQ_invoicenumber'   => order.invoice_number,
           'BRQ_amount'          => order.amount,
           'BRQ_websitekey'      => merchant_key,
-          'BRQ_culture'         => culture,
-          'BPE_Signature2'      => signature
+          'BRQ_culture'         => culture
         }.merge compact({
-          'BPE_Issuer'          => order.bank,
-          'BPE_Description'     => order.description,
-          'BPE_Reference'       => order.reference,
-          'BPE_Return_Success'  => success_url,
-          'BPE_Return_Reject'   => reject_url,
-          'BPE_Return_Error'    => error_url
+          'BRQ_Issuer'          => order.bank,
+          'BRQ_Description'     => order.description,
+          'BRQ_Reference'       => order.reference,
+          'BRQ_Return_Success'  => success_url,
+          'BRQ_Return_Reject'   => reject_url,
+          'BRQ_Return_Error'    => error_url
         })
+      end
+
+      def parameters
+        payload.merge({'BRQ_Signature2' => signature.to_s})
       end
 
       private
 
       def signature
-        Buckaroo::Ideal::Signature.new(parameters)
+        Buckaroo::Ideal::Signature.new(payload)
       end
 
       def set(key, value)

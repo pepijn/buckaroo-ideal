@@ -79,12 +79,12 @@ describe Buckaroo::Ideal::Request do
       parameters['BRQ_invoicenumber'].should == 'INV001'
     end
 
-    it 'has a generated BPE_Signature2' do
-      parameters['BPE_Signature2'].length.should == 32
+    it 'has a generated BRQ_Signature2' do
+      parameters['BRQ_Signature2'].length.should == 40
 
       request.stub(:signature).and_return('signature')
 
-      parameters['BPE_Signature2'].should == 'signature'
+      parameters['BRQ_Signature2'].should == 'signature'
     end
 
     it 'has a BRQ_culture with the language' do
@@ -94,49 +94,49 @@ describe Buckaroo::Ideal::Request do
       parameters['BRQ_culture'].should == 'en-US'
     end
 
-    it "has a BPE_Issuer if the order's bank is set" do
-      parameters.keys.should_not include 'BPE_Issuer'
+    it "has a BRQ_Issuer if the order's bank is set" do
+      parameters.keys.should_not include 'BRQ_Issuer'
 
       order.bank = 'ABNAMRO'
-      parameters['BPE_Issuer'].should == 'ABNAMRO'
+      parameters['BRQ_Issuer'].should == 'ABNAMRO'
     end
 
-    it "has a BPE_Description if the order's description is set" do
-      parameters.keys.should_not include 'BPE_Description'
+    it "has a BRQ_Description if the order's description is set" do
+      parameters.keys.should_not include 'BRQ_Description'
 
       order.description = 'Your Order Description'
-      parameters['BPE_Description'].should == 'Your Order Description'
+      parameters['BRQ_Description'].should == 'Your Order Description'
     end
 
-    it 'has a BPE_Reference if the reference is set' do
-      parameters.keys.should_not include 'BPE_Reference'
+    it 'has a BRQ_Reference if the reference is set' do
+      parameters.keys.should_not include 'BRQ_Reference'
 
       order.reference = 'Reference'
-      parameters['BPE_Reference'].should == 'Reference'
+      parameters['BRQ_Reference'].should == 'Reference'
     end
 
-    it 'has a BPE_Return_Success if the success_url is set' do
+    it 'has a BRQ_Return_Success if the success_url is set' do
       request.success_url = nil
-      parameters.keys.should_not include 'BPE_Return_Success'
+      parameters.keys.should_not include 'BRQ_Return_Success'
 
       request.success_url = 'http://example.org/'
-      parameters['BPE_Return_Success'].should == 'http://example.org/'
+      parameters['BRQ_Return_Success'].should == 'http://example.org/'
     end
 
-    it 'has a BPE_Return_Reject if the reject_url is set' do
+    it 'has a BRQ_Return_Reject if the reject_url is set' do
       request.reject_url = nil
-      parameters.keys.should_not include 'BPE_Return_Reject'
+      parameters.keys.should_not include 'BRQ_Return_Reject'
 
       request.reject_url = 'http://example.org/'
-      parameters['BPE_Return_Reject'].should == 'http://example.org/'
+      parameters['BRQ_Return_Reject'].should == 'http://example.org/'
     end
 
-    it 'has a BPE_Return_Error if the error_url is set' do
+    it 'has a BRQ_Return_Error if the error_url is set' do
       request.error_url = nil
-      parameters.keys.should_not include 'BPE_Return_Error'
+      parameters.keys.should_not include 'BRQ_Return_Error'
 
       request.error_url = 'http://example.org/'
-      parameters['BPE_Return_Error'].should == 'http://example.org/'
+      parameters['BRQ_Return_Error'].should == 'http://example.org/'
     end
   end
 end
