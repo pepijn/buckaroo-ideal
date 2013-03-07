@@ -8,10 +8,7 @@ describe Buckaroo::Ideal::Config do
       :test_mode       => true,
       :success_url     => 'http://example.com/transaction/success',
       :reject_url      => 'http://example.com/transaction/reject',
-      :error_url       => 'http://example.com/transaction/error',
-      :return_method   => 'GET',
-      :style           => 'POPUP',
-      :autoclose_popup => true
+      :error_url       => 'http://example.com/transaction/error'
     )
   end
 
@@ -39,10 +36,6 @@ describe Buckaroo::Ideal::Config do
 
   it 'has a error_url' do
     subject.error_url.should == 'http://example.com/transaction/error'
-  end
-
-  it 'has a return_method' do
-    subject.return_method.should == 'GET'
   end
 
   it 'can be reset to default values' do

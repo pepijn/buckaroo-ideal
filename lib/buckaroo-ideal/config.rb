@@ -17,6 +17,11 @@ module Buckaroo
         # @return [String] The merchant-key for the application
         attr_accessor :merchant_key
 
+        # This allows you to pre-select the method of payment for the customer
+        #
+        # @return [String] The preferred payment method
+        attr_accessor :payment_method
+
         # The secret_key should only be known by your application and Buckaroo.
         # It is used to sign orders and validate transactions.
         #
@@ -36,33 +41,16 @@ module Buckaroo
         #   occured during the transaction
         attr_accessor :error_url
 
-        # @return [String] The HTTP method that will be used to return the user
-        #   back to the application after a transaction
-        attr_accessor :return_method
-
-        # There are 2 styles that you can use to integrate Buckaroo iDEAL:
-        # * POPUP - The transaction is performed in a popup
-        # * PAGE  - The transaction is performed in the original window
-        #
-        # @return [String] The style that is being used
-        attr_accessor :style
-
-        # If the POPUP style is being used, you can autoclose the popup after
-        # a transaction. You will have to provide information about the
-        # transaction to the user on the page he will arrive on.
-        #
-        # @return [Boolean] Autoclose the popup after a transaction
-        attr_accessor :autoclose_popup
-
         # Default settings
         def defaults
           {
-            :gateway_url     =>  'https://testcheckout.buckaroo.nl/html/',
-            :merchant_key    =>  nil,
-            :secret_key      =>  nil,
-            :success_url     =>  nil,
-            :reject_url      =>  nil,
-            :error_url       =>  nil,
+            :gateway_url     => 'https://testcheckout.buckaroo.nl/html/',
+            :merchant_key    => nil,
+            :payment_method  => nil,
+            :secret_key      => nil,
+            :success_url     => nil,
+            :reject_url      => nil,
+            :error_url       => nil
           }
         end
 

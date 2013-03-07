@@ -45,10 +45,7 @@ module Buckaroo
           :culture         => 'nl-NL',
           :success_url     => Config.success_url,
           :reject_url      => Config.reject_url,
-          :error_url       => Config.error_url,
-          :return_method   => Config.return_method,
-          :style           => Config.style,
-          :autoclose_popup => Config.autoclose_popup
+          :error_url       => Config.error_url
         }
       end
 
@@ -57,6 +54,8 @@ module Buckaroo
 
       # @return [String] The configured merchant_key in +Buckaroo::Ideal::Config+
       delegate :merchant_key, :to => Config
+
+      delegate :payment_method, :to => Config
 
       # @return [Buckaroo::Ideal::Order] The order for which the payment request
       #   is being made
@@ -87,25 +86,6 @@ module Buckaroo
       #   occured during the transaction
       attr_accessor :error_url
 
-      # Defaults to the configured +Buckaroo::Ideal::Config.return_method+, but
-      # can be overwritten in the +Order+ instance.
-      #
-      # @return [String] The HTTP method that will be used to return the user
-      #   back to the application after a transaction
-      attr_accessor :return_method
-
-      # Defaults to the configured +Buckaroo::Ideal::Config.style+, but can be
-      # overwritten in the +Order+ instance.
-      #
-      # @return [String] The style that is being used
-      attr_accessor :style
-
-      # Defaults to the configured +Buckaroo::Ideal::Config.autoclose_popup+,
-      # but can be overwritten in the +Order+ instance.
-      #
-      # @return [Boolean] Autoclose the popup after a transaction
-      attr_accessor :autoclose_popup
-
       # Initialize a new +Buckaroo::Ideal::Request+ instance for the given
       # order.
       #
@@ -133,7 +113,8 @@ module Buckaroo
           'brq_reference'       => order.reference,
           'brq_return_success'  => success_url,
           'brq_return_reject'   => reject_url,
-          'brq_return_error'    => error_url
+          'brq_return_error'    => error_url,
+          'brq_payment_method'  => payment_method
         })
       end
 

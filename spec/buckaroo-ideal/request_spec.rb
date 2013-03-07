@@ -12,9 +12,6 @@ describe Buckaroo::Ideal::Request do
       :success_url     => 'http://example.com/transaction/success',
       :reject_url      => 'http://example.com/transaction/reject',
       :error_url       => 'http://example.com/transaction/error',
-      :return_method   => 'GET',
-      :style           => 'POPUP',
-      :autoclose_popup => true
     )
   end
 
@@ -32,18 +29,6 @@ describe Buckaroo::Ideal::Request do
 
   it 'has a default error_url from the configuration' do
     request.error_url.should == 'http://example.com/transaction/error'
-  end
-
-  it 'has a default return_method from the configuration' do
-    request.return_method.should == 'GET'
-  end
-
-  it 'has a default style from the configuration' do
-    request.style.should == 'POPUP'
-  end
-
-  it 'has a default autoclose_popup from the configuration' do
-    request.autoclose_popup.should be_true
   end
 
   describe '#gateway_url' do
@@ -94,8 +79,8 @@ describe Buckaroo::Ideal::Request do
       parameters['brq_culture'].should == 'en-US'
     end
 
-    it "has a brq_Issuer if the order's bank is set" do
-      parameters.keys.should_not include 'brq_Issuer'
+    it "has a brq_issuer if the order's bank is set" do
+      parameters.keys.should_not include 'brq_issuer'
 
       order.bank = 'ABNAMRO'
       parameters['brq_issuer'].should == 'ABNAMRO'
