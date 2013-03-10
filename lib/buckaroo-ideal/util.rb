@@ -23,6 +23,12 @@ module Buckaroo
 
       end
 
+
+      def starts_with?(string, prefix)
+        prefix = prefix.to_s
+        string[0, prefix.length] == prefix
+      end
+
       def compact(subject)
         subject = subject.dup
 
