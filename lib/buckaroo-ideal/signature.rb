@@ -35,6 +35,7 @@ module Buckaroo
           a[0].downcase <=> b[0].downcase
           }.each { |k, v| content += "#{k}=#{::CGI::unescape v.to_s}" }
         content
+        logger.error "Content for signature: \n#{content}\n"
       end
 
       def signature
