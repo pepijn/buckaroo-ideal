@@ -38,25 +38,27 @@ module Buckaroo
       # @return [Float] The amount that was transferred during the transaction
       attr_reader :amount
 
-      # @return [Boolean] Returns +true+ if the transaction was a test, +false+
-      #   if it was real
-      attr_reader :test_mode
+      attr_accessor :signature_class
 
       def initialize(params = {})
         @parameters     = params
-        @transaction_id = parameters['bpe_trx']
-        @reference      = parameters['bpe_reference']
-        @invoice_number = parameters['bpe_invoice']
-        @currency       = parameters['bpe_currency']
-        @timestamp      = parameters['bpe_timestamp']
+        @transaction_id = parameters['brq_transactions']
+        @reference      = parameters['brq_payment']
+        @invoice_number = parameters['brq_invoicenumber']
+        @currency       = parameters['brq_currency']
+        @timestamp      = parameters['brq_timestamp']
         @time           = Time.parse(timestamp)
-        @amount         = parameters['bpe_amount']
-        @status         = Status.new(parameters['bpe_result'])
-        @signature      = parameters['bpe_signature2']
+        @amount         = parameters['brq_amount']
+        @status         = Status.new(parameters['brq_statuscode'])
+        @signature      = parameters['brq_signature']
       end
 
       def valid?
-        signature.valid?
+        @signature == signature_class.to_s
+      end
+
+      def signature_class
+        @signature_class ||= Signature.new(parameters)
       end
 
       private

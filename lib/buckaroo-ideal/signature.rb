@@ -22,7 +22,7 @@ module Buckaroo
       #
       # @param [Hash] The parameters that needs to be signed.
       def initialize(parameters)
-        @parameters  = parameters
+        @parameters  = parameters.tap {|h| h.delete(:brq_signature)}
       end
 
       def content_for_signature

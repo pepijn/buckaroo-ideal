@@ -31,4 +31,10 @@ describe Buckaroo::Ideal::Signature do
     Digest::SHA1.should_receive(:hexdigest).with("a=testb=testsecret_key")
     Buckaroo::Ideal::Signature.new(parameters).to_s
   end
+
+  it 'should disregard the "brq_signature" field for creating the signature' do
+    parameters = {a: 'jolly+rogers', b: 'test', brq_signature: 'longstringhere'}
+    signature = Buckaroo::Ideal::Signature.new(parameters)
+    signature.content_for_signature.should eql 'a=jolly rogersb=test'
+  end
 end

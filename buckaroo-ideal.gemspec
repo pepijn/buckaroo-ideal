@@ -17,9 +17,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'activesupport'
 
-  if RUBY_VERSION < "1.9"
-    gem.add_dependency 'fastercsv'
-  else
+  unless RUBY_VERSION < "1.9"
     gem.add_dependency 'transliterator'
   end
 end
