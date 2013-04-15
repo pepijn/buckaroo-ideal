@@ -1,4 +1,4 @@
-source :rubygems
+source "https://rubygems.org"
 
 # Specify the project's dependencies in the gemspec:
 gemspec

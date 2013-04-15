@@ -37,4 +37,14 @@ describe Buckaroo::Ideal::Order do
   it 'does not have a default invoice_number' do
     order.invoice_number.should be_nil
   end
+
+  it "should allow passing in the merchant_key" do
+    order.merchant_key = "different_merchant_key"
+    order.merchant_key.should eql "different_merchant_key"
+  end
+
+  it "should allow passing in the secret_key" do
+    order.secret_key = "different_secret_key"
+    order.secret_key.should eql "different_secret_key"
+  end
 end
