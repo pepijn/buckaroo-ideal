@@ -52,9 +52,6 @@ module Buckaroo
       # @return [String] The configured gateway_url in +Buckaroo::Ideal::Config+
       delegate :gateway_url,  :to => Config
 
-      # @return [String] The configured merchant_key in +Buckaroo::Ideal::Config+
-      delegate :merchant_key, :to => Config
-
       delegate :payment_method, :to => Config
 
       # @return [Buckaroo::Ideal::Order] The order for which the payment request
@@ -105,7 +102,7 @@ module Buckaroo
           'brq_currency'        => order.currency,
           'brq_invoicenumber'   => order.invoice_number,
           'brq_amount'          => order.amount,
-          'brq_websitekey'      => merchant_key,
+          'brq_websitekey'      => order.merchant_key,
           'brq_culture'         => culture
         }.merge compact({
           'brq_issuer'          => order.bank,
@@ -125,7 +122,7 @@ module Buckaroo
       private
 
       def signature
-        Buckaroo::Ideal::Signature.new(payload)
+        Buckaroo::Ideal::Signature.new(payload, order.secret_key)
       end
 
       def set(key, value)

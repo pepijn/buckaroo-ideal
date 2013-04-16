@@ -4,7 +4,11 @@ module Buckaroo
   module Ideal
     class Order
       def self.defaults
-        { :currency => 'EUR' }
+        {
+          :currency => 'EUR',
+          :secret_key => Config.secret_key,
+          :merchant_key => Config.merchant_key
+        }
       end
 
       # @return [String] The merchant key for this order.

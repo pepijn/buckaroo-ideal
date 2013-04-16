@@ -14,15 +14,17 @@ module Buckaroo
       # @return [Buckaroo::Ideal::Order] The order that is being signed.
       attr_reader :parameters
 
-      # @return [String] The configured secret_key in +Buckaroo::Ideal::Config+
-      delegate :secret_key,   :to => Config
+      # @return [String] The secret_key used to sign (either passed in or
+      # configured in +Buckaroo::Ideal::Config+).
+      attr_reader :secret_key
 
       # Initialize a new +Buckaroo::Ideal::Signature+ instance for the given
       # parameters.
       #
       # @param [Hash] The parameters that needs to be signed.
-      def initialize(parameters)
-        @parameters  = parameters.tap {|h| h.delete(:brq_signature)}
+      def initialize(parameters, secret_key = Config.secret_key)
+        @secret_key = secret_key
+        @parameters = parameters.tap {|h| h.delete(:brq_signature)}
       end
 
       def content_for_signature

@@ -40,11 +40,11 @@ describe Buckaroo::Ideal::Request do
   describe '#parameters' do
     def parameters; request.parameters; end
 
-    it 'has a brq_websitekey with the configured merchant_key' do
+    it 'has a brq_websitekey from the parameters' do
       parameters['brq_websitekey'].should == 'merchant_key'
 
       Buckaroo::Ideal::Config.merchant_key = 'new_merchant_key'
-      parameters['brq_websitekey'].should == 'new_merchant_key'
+      parameters['brq_websitekey'].should == 'merchant_key'
     end
 
     it "has a brq_amount with the order's amount as a float" do
