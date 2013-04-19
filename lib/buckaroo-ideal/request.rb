@@ -108,6 +108,7 @@ module Buckaroo
           'brq_issuer'          => order.bank,
           'brq_description'     => order.description,
           'brq_reference'       => order.reference,
+          'brq_return'          => success_url,
           'brq_return_success'  => success_url,
           'brq_return_reject'   => reject_url,
           'brq_return_error'    => error_url,

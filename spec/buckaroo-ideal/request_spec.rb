@@ -100,6 +100,14 @@ describe Buckaroo::Ideal::Request do
       parameters['brq_reference'].should == 'Reference'
     end
 
+    it "returns success_url as brq_return so as to have a sensible default" do
+      request.success_url = nil
+      parameters.keys.should_not include 'brq_return'
+
+      request.success_url = 'http://example.org/'
+      parameters['brq_return'].should == 'http://example.org/'
+    end
+
     it 'has a brq_return_success if the success_url is set' do
       request.success_url = nil
       parameters.keys.should_not include 'brq_return_success'
