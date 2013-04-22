@@ -7,7 +7,10 @@ module Buckaroo
         {
           :currency => 'EUR',
           :secret_key => Config.secret_key,
-          :merchant_key => Config.merchant_key
+          :merchant_key => Config.merchant_key,
+          :success_url => Config.success_url,
+          :reject_url  => Config.reject_url,
+          :error_url => Config.error_url
         }
       end
 
@@ -34,6 +37,15 @@ module Buckaroo
 
       # @return [String] The invoice number that is associated with the order.
       attr_accessor :invoice_number
+
+      # @return [String] The url the gateway should return the request to upon successful completion.
+      attr_accessor :success_url
+
+      # @return [String] The url the gateway should return the request to upon order rejection.
+      attr_accessor :reject_url
+
+      # @return [String] The url the gateway should return the request if it encounters an error.
+      attr_accessor :error_url
 
       # Initialize a new +Order+ with the given settings. Uses the defaults from
       # +Buckaroo::Ideal::Order.defaults+ for settings that are not specified.

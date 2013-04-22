@@ -40,7 +40,7 @@ module Buckaroo
 
       attr_accessor :signature_class
 
-      def initialize(params = {})
+      def initialize(params = {}, secret_key = Config.secret_key)
         @parameters     = params
         @transaction_id = parameters['brq_transactions']
         @reference      = parameters['brq_payment']
@@ -51,6 +51,7 @@ module Buckaroo
         @amount         = parameters['brq_amount']
         @status         = Status.new(parameters['brq_statuscode'])
         @signature      = parameters['brq_signature']
+        @secret_key     = secret_key
       end
 
       def valid?
@@ -58,7 +59,7 @@ module Buckaroo
       end
 
       def signature_class
-        @signature_class ||= Signature.new(parameters)
+        @signature_class ||= Signature.new(parameters, @secret_key)
       end
 
       private

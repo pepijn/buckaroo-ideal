@@ -101,35 +101,27 @@ describe Buckaroo::Ideal::Request do
     end
 
     it "returns success_url as brq_return so as to have a sensible default" do
-      request.success_url = nil
-      parameters.keys.should_not include 'brq_return'
-
-      request.success_url = 'http://example.org/'
-      parameters['brq_return'].should == 'http://example.org/'
+      order.success_url = 'http://example.org/'
+      request = Buckaroo::Ideal::Request.new(order)
+      request.parameters['brq_return'].should == 'http://example.org/'
     end
 
     it 'has a brq_return_success if the success_url is set' do
-      request.success_url = nil
-      parameters.keys.should_not include 'brq_return_success'
-
-      request.success_url = 'http://example.org/'
-      parameters['brq_return_success'].should == 'http://example.org/'
+      order.success_url = 'http://example.org/'
+      request = Buckaroo::Ideal::Request.new(order)
+      request.parameters['brq_return_success'].should == 'http://example.org/'
     end
 
     it 'has a brq_return_reject if the reject_url is set' do
-      request.reject_url = nil
-      parameters.keys.should_not include 'brq_return_reject'
-
-      request.reject_url = 'http://example.org/'
-      parameters['brq_return_reject'].should == 'http://example.org/'
+      order.reject_url = 'http://example.org/'
+      request = Buckaroo::Ideal::Request.new(order)
+      request.parameters['brq_return_reject'].should == 'http://example.org/'
     end
 
     it 'has a brq_return_error if the error_url is set' do
-      request.error_url = nil
-      parameters.keys.should_not include 'brq_return_error'
-
-      request.error_url = 'http://example.org/'
-      parameters['brq_return_error'].should == 'http://example.org/'
+      order.error_url = 'http://example.org/'
+      request = Buckaroo::Ideal::Request.new(order)
+      request.parameters['brq_return_error'].should == 'http://example.org/'
     end
   end
 end
