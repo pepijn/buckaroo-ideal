@@ -44,7 +44,7 @@ module Buckaroo
         # Default settings
         def defaults
           {
-            :gateway_url     => 'https://testcheckout.buckaroo.nl/html/',
+            :gateway_url     => 'https://testcheckout.buckaroo.nl/nvp/',
             :merchant_key    => nil,
             :payment_method  => nil,
             :secret_key      => nil,
