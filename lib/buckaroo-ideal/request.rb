@@ -109,9 +109,6 @@ module Buckaroo
           'brq_description'     => order.description,
           'brq_reference'       => order.reference,
           'brq_return'          => order.success_url,
-          'brq_return_success'  => order.success_url,
-          'brq_return_reject'   => order.reject_url,
-          'brq_return_error'    => order.error_url,
           'brq_payment_method'  => payment_method
         })
       end
