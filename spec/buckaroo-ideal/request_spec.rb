@@ -19,18 +19,6 @@ describe Buckaroo::Ideal::Request do
     request.culture.should == 'nl-NL'
   end
 
-  it 'has a default success_url from the configuration' do
-    request.success_url.should == 'http://example.com/transaction/success'
-  end
-
-  it 'has a default reject_url from the configuration' do
-    request.reject_url.should == 'http://example.com/transaction/reject'
-  end
-
-  it 'has a default error_url from the configuration' do
-    request.error_url.should == 'http://example.com/transaction/error'
-  end
-
   describe '#gateway_url' do
     it 'returns the configured gateway_url' do
       request.gateway_url.should == Buckaroo::Ideal::Config.gateway_url
@@ -106,22 +94,10 @@ describe Buckaroo::Ideal::Request do
       request.parameters['brq_return'].should == 'http://example.org/'
     end
 
-    it 'has a brq_return_success if the success_url is set' do
+    it 'has a brq_return if the success_url is set' do
       order.success_url = 'http://example.org/'
       request = Buckaroo::Ideal::Request.new(order)
-      request.parameters['brq_return_success'].should == 'http://example.org/'
-    end
-
-    it 'has a brq_return_reject if the reject_url is set' do
-      order.reject_url = 'http://example.org/'
-      request = Buckaroo::Ideal::Request.new(order)
-      request.parameters['brq_return_reject'].should == 'http://example.org/'
-    end
-
-    it 'has a brq_return_error if the error_url is set' do
-      order.error_url = 'http://example.org/'
-      request = Buckaroo::Ideal::Request.new(order)
-      request.parameters['brq_return_error'].should == 'http://example.org/'
+      request.parameters['brq_return'].should == 'http://example.org/'
     end
   end
 end
