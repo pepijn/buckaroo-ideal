@@ -41,6 +41,9 @@ module Buckaroo
       attr_accessor :signature_class
 
       def initialize(params = {}, secret_key = Config.secret_key)
+        if params.is_a? String
+          params = parameterise params
+        end
         @parameters     = params
         @transaction_id = parameters['brq_transactions']
         @reference      = parameters['brq_payment']
@@ -63,6 +66,15 @@ module Buckaroo
       end
 
       private
+
+      def parameterize_response response
+        response_hash = {}
+        response.split("&").each do |param|
+          p = param.split "="
+          response_hash[p[0].downcase] = CGI.unescape p[1]
+        end
+        response_hash
+      end
 
       include Util
     end

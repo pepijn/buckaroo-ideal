@@ -104,31 +104,55 @@ module Buckaroo
           'brq_amount'          => order.amount,
           'brq_websitekey'      => order.merchant_key,
           'brq_culture'         => culture
-        }.merge compact({
-          'brq_issuer'          => order.bank,
-          'brq_description'     => order.description,
-          'brq_reference'       => order.reference,
-          'brq_return'          => order.success_url,
-          'brq_payment_method'  => payment_method,
-          'brq_continue_on_incomplete' => 'RedirectToHTML'
-        })
+          }.merge compact({
+            'brq_issuer'          => order.bank,
+            'brq_description'     => order.description,
+            'brq_reference'       => order.reference,
+            'brq_return'          => order.success_url,
+            'brq_payment_method'  => payment_method,
+            'brq_continue_on_incomplete' => 'RedirectToHTML'
+            })
+        end
+
+        def parameters
+          payload.merge({'brq_signature' => signature.to_s})
+        end
+
+        def response
+          post_request.body = concat request
+          response = https_connection.request(post_request)
+          response = Buckaroo::Ideal::Response.new response.body
+          response
+        end
+
+        private
+
+        def signature
+          Buckaroo::Ideal::Signature.new(payload, order.secret_key)
+        end
+
+        def set(key, value)
+          instance_variable_set(:"@#{key}", value)
+        end
+
+        def post_request
+          @post ||= Net::HTTP::Post.new(URI.parse(gateway_url).path)
+        end
+
+        def https_connection
+          @https ||= Net::HTTP.new(uri.host,uri.port)
+          @https.use_ssl = true
+        end
+
+        def concat request
+          out = []
+          request.parameters.each { |k, v|
+            out.append "#{k}=#{v}"
+          }
+          out.join "&"
+        end
+
+        include Util
       end
-
-      def parameters
-        payload.merge({'brq_signature' => signature.to_s})
-      end
-
-      private
-
-      def signature
-        Buckaroo::Ideal::Signature.new(payload, order.secret_key)
-      end
-
-      def set(key, value)
-        instance_variable_set(:"@#{key}", value)
-      end
-
-      include Util
     end
   end
-end
