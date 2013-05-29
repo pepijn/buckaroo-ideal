@@ -17,6 +17,8 @@ module Buckaroo
     autoload :Config,                   'buckaroo-ideal/config'
     autoload :Order,                    'buckaroo-ideal/order'
     autoload :Response,                 'buckaroo-ideal/response'
+    autoload :ResponseFactory,          'buckaroo-ideal/response_factory'
+    autoload :FailResponse,             'buckaroo-ideal/fail_response'
     autoload :Signature,                'buckaroo-ideal/signature'
     autoload :Request,                  'buckaroo-ideal/request'
     autoload :TransactionRequest,       'buckaroo-ideal/transaction_request'
