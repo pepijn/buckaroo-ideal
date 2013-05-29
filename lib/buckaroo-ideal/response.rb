@@ -67,7 +67,7 @@ module Buckaroo
 
       private
 
-      def parameterize_response response
+      def parameterise response
         response_hash = {}
         response.split("&").each do |param|
           p = param.split "="

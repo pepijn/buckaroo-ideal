@@ -119,7 +119,7 @@ module Buckaroo
         end
 
         def response
-          post_request.body = concat request
+          post_request.body = concat_parameters
           response = https_connection.request(post_request)
           response = Buckaroo::Ideal::Response.new response.body
           response
@@ -135,18 +135,23 @@ module Buckaroo
           instance_variable_set(:"@#{key}", value)
         end
 
+        def gateway_uri
+          URI.parse(gateway_url)
+        end
+
         def post_request
-          @post ||= Net::HTTP::Post.new(URI.parse(gateway_url).path)
+          @post ||= Net::HTTP::Post.new(gateway_uri.path)
         end
 
         def https_connection
-          @https ||= Net::HTTP.new(uri.host,uri.port)
+          @https ||= Net::HTTP.new(gateway_uri.host,gateway_uri.port)
           @https.use_ssl = true
+          @https
         end
 
-        def concat request
+        def concat_parameters
           out = []
-          request.parameters.each { |k, v|
+          parameters.each { |k, v|
             out.append "#{k}=#{v}"
           }
           out.join "&"
