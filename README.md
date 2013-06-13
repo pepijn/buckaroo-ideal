@@ -1,6 +1,7 @@
 # Buckaroo::Ideal [![Build Status](https://secure.travis-ci.org/eet-nu/buckaroo-ideal.png)][Travis CI] [![Dependency Status](https://gemnasium.com/eet-nu/buckaroo-ideal.png)][Gemnasium]
 
 A simple Ruby library that aids you in handling iDEAL transactions via the [Buckaroo iDEAL gateway].
+This fork is based on the latest BPE3.0 implementation by tvanderpol, which was not fully compatible with Ruby 1.8.7. This fork is.
 
 ## Getting Started
 
