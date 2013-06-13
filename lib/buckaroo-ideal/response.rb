@@ -42,15 +42,15 @@ module Buckaroo
 
       def initialize(params = {}, secret_key = Config.secret_key)
         @parameters     = params
-        @transaction_id = parameters['brq_transactions']
-        @reference      = parameters['brq_payment']
-        @invoice_number = parameters['brq_invoicenumber']
-        @currency       = parameters['brq_currency']
-        @timestamp      = parameters['brq_timestamp']
+        @transaction_id = parameters[:brq_transactions]
+        @reference      = parameters[:brq_payment]
+        @invoice_number = parameters[:brq_invoicenumber]
+        @currency       = parameters[:brq_currency]
+        @timestamp      = parameters[:brq_timestamp]
         @time           = Time.parse(timestamp)
-        @amount         = parameters['brq_amount']
-        @status         = Status.new(parameters['brq_statuscode'])
-        @signature      = parameters['brq_signature']
+        @amount         = parameters[:brq_amount]
+        @status         = Status.new(parameters[:brq_statuscode])
+        @signature      = parameters[:brq_signature]
         @secret_key     = secret_key
       end
 
