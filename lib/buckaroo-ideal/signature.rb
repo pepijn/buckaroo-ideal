@@ -34,7 +34,7 @@ module Buckaroo
         }
 
         elligible_parameters.sort{ |a, b|
-          a[0].downcase <=> b[0].downcase
+          a[0].to_s.downcase <=> b[0].to_s.downcase
           }.each { |k, v| content += "#{k}=#{::CGI::unescape v.to_s}" }
         content
       end

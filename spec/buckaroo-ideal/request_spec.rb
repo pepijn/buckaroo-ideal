@@ -11,7 +11,7 @@ describe Buckaroo::Ideal::Request do
       :test_mode       => true,
       :success_url     => 'http://example.com/transaction/success',
       :reject_url      => 'http://example.com/transaction/reject',
-      :error_url       => 'http://example.com/transaction/error',
+      :error_url       => 'http://example.com/transaction/error'
     )
   end
 

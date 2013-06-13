@@ -26,7 +26,7 @@ module Buckaroo
 
       def starts_with?(string, prefix)
         prefix = prefix.to_s
-        string[0, prefix.length] == prefix
+        string.to_s[0, prefix.length] == prefix
       end
 
       def compact(subject)
