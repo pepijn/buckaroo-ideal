@@ -24,9 +24,9 @@ Or install it yourself as:
 You can add code to your initialization process to configure the integration with Buckaroo:
 
     Buckaroo::Ideal::Config.configure(
-      partner_key: "Your Partner Key",
-      secret_key:  "Your Secret Key",
-      test_mode:   false # or true during development
+		:gateway_url    => 'https://testcheckout.buckaroo.nl/html/',
+      	:partner_key 	=> "Your Partner Key",
+      	:secret_key 	=>  "Your Secret Key"
     )
 
 ## Usage
