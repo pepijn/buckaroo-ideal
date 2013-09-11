@@ -6,6 +6,7 @@ module Buckaroo
       def self.defaults
         {
           :currency => 'EUR',
+          :ideal_action => 'pay',
           :secret_key => Config.secret_key,
           :merchant_key => Config.merchant_key,
           :success_url => Config.success_url,
@@ -26,8 +27,11 @@ module Buckaroo
       # @return [String] The currency that is being used for the transaction.
       attr_accessor :currency
 
-      # @return [String] The bank that will be used for the order's transaction.
-      attr_accessor :bank
+      # @return [String] The iDeal issuer that will be used for the order's transaction.
+      attr_accessor :ideal_issuer
+
+      # @return [String] The iDeal action that will be used for the order's transaction.
+      attr_accessor :ideal_action
 
       # @return [String] The description for the transaction.
       attr_accessor :description

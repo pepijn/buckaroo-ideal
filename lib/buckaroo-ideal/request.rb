@@ -105,14 +105,15 @@ module Buckaroo
           'brq_websitekey'      => order.merchant_key,
           'brq_culture'         => culture
         }.merge compact({
-          'brq_issuer'          => order.bank,
           'brq_description'     => order.description,
           'brq_reference'       => order.reference,
           'brq_return'          => order.success_url,
           'brq_return_success'  => order.success_url,
           'brq_return_reject'   => order.reject_url,
           'brq_return_error'    => order.error_url,
-          'brq_payment_method'  => payment_method
+          'brq_payment_method'  => payment_method,
+          'brq_service_ideal_action' => order.ideal_action,
+          'brq_service_ideal_issuer' => order.ideal_issuer,
         })
       end
 

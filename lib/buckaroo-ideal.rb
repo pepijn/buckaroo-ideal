@@ -3,9 +3,18 @@ $LOAD_PATH << File.expand_path('..', __FILE__)
 module Buckaroo
   module Ideal
     # The banks that are supported by Buckaroo's iDEAL platform
-    BANKS = %w[ ABNAMRO  ASNBANK  FRIESLAND
-                INGBANK  RABOBANK SNSBANK
-                SNSREGIO TRIODOS  LANSCHOT  ]
+    BANKS = {
+      ABNANL2A: "ABNAMRO Bank",
+      ASNBNL21: "ASN Bank",
+      FRBKNL2L: "Frieslandbank",
+      INGBNL2A: "ING Bank",
+      KNABNL2H: "Knab",
+      RABONL2U: "Rabobank",
+      RBRBNL21: "RegioBank",
+      SNSBNL2A: "SNS Bank",
+      TRIONL2U: "Triodos Bank",
+      FVLBNL22: "Van Lanschot"
+    }
 
     # The currencies that are supported by Buckaroo's iDEAL platform
     CURRENCIES = %w[ EUR ]
